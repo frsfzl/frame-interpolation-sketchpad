@@ -2,25 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Sketchpad</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="tools">
-    <button onclick="setTool('draw')">Draw</button>
-    <button onclick="setTool('erase')">Eraser</button>
-    <button onclick="createNewFrame()">Create New Frame</button>
+  <div class="tool-panel" id="toolPanel">
+    <div class="tool-button" onclick="setTool('draw')" id="tool-draw">
+      <img src="images/draw.png" alt="Draw">
+      <span>Draw</span>
+    </div>
+    <div class="tool-button" onclick="setTool('erase')" id="tool-erase">
+      <img src="images/erase.png" alt="Erase">
+      <span>Erase</span>
+    </div>
+    <div class="tool-button" onclick="setTool('clear')">
+      <img src="images/clear.png" alt="Clear">
+      <span>Clear</span>
+    </div>
+    <div class="tool-button" onclick="createNewFrame()">
+      <img src="images/new_frame.png" alt="New Frame">
+      <span>New Frame</span>
+    </div>
+    <div class="tool-button" id="tool-play" onclick="playFrames()">
+        <img src="images/play.png" />
+        <span>Play</span>
+    </div>
   </div>
 
-  <div class="main">
-    <div class="container">
-      <canvas id="drawCanvas" width="800" height="600"></canvas>
-    </div>
+  <div class="canvas-container">
+    <canvas id="onionCanvas" width="800" height="600"></canvas>
+    <canvas id="drawCanvas" width="800" height="600"></canvas>
+  </div>
 
-    <div class="frame-sidebar" id="frameSidebar">
-      <!-- Thumbnails of saved frames will appear here -->
-    </div>
+  <div class="frame-sidebar" id="frameSidebar">
+    <!-- Frame thumbnails will be added here -->
   </div>
 
   <script src="script.js"></script>

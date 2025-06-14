@@ -1,67 +1,142 @@
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
-  font-family: sans-serif;
+  background-color: #f6f1e7;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tool Panel (Left) */
+.tool-panel {
+  position: fixed;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  width: 150px;
+  background-color: #d7ccc8;
+  border: 2px solid #6d4c41;
+  border-radius: 10px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.main {
-  display: flex;
-  align-items: flex-start;
   gap: 20px;
-  padding: 20px;
 }
 
-.container {
-  border: 2px solid #ccc;
-  background-color: white;
+.canvas-container {
+  position: fixed;
+  width: 960px;
+  height: 720px;
+  top: 50%;
+  left: calc((170px + (100vw - 320px)) / 2);
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 2px solid #b08861;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-canvas {
-  cursor: crosshair;
-  background-color: #fff;
+#drawCanvas, #onionCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 960px;
+  height: 720px;
 }
 
-.tools {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  padding: 10px;
+#onionCanvas {
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
 }
 
-button {
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+#drawCanvas {
+  z-index: 1;
+  pointer-events: auto;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
+/* Frame Sidebar (Right) */
 .frame-sidebar {
-  width: 130px;
-  max-height: 600px;
-  overflow-y: auto;
-  border: 2px solid #ccc;
-  background-color: #fff;
+  position: fixed;
+  top: 20px;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #bcaaa4;
+  border: 2px solid #6d4c41;
+  border-radius: 10px;
   padding: 10px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* Scrollbar Styling */
+.frame-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.frame-sidebar::-webkit-scrollbar-track {
+  background: #d7ccc8;
+  border-radius: 10px;
+}
+.frame-sidebar::-webkit-scrollbar-thumb {
+  background: #8d6e63;
+  border-radius: 10px;
+}
+
+/* Frame Thumbnails */
 .frame-sidebar img {
   width: 100%;
-  border: 1px solid #aaa;
+  border: 2px solid #5d4037;
+  border-radius: 6px;
   cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.frame-sidebar img:hover {
+  transform: scale(1.02);
+}
+
+/* Tool Buttons */
+.tool-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #a1887f;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  width: 100px;
+}
+
+.tool-button:hover {
+  background-color: #8d6e63;
+  transform: scale(1.05);
+}
+
+.tool-button img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 6px;
+}
+
+.tool-button span {
+  font-size: 16px;
+  color: #221814;
+}
+
+.tool-button.selected {
+    outline: 3px solid #4e343e;
+    background-color: #8d6e63 !important;
 }
