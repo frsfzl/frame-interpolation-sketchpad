@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sketchpad</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <canvas id="drawCanvas" width="800" height="600"></canvas>
+  <div class="tools">
+    <button onclick="setTool('draw')">Draw</button>
+    <button onclick="setTool('erase')">Eraser</button>
+    <button onclick="createNewFrame()">Create New Frame</button>
   </div>
-<div class="tools">
-  <button onclick="setTool('draw')">Draw</button>
-  <button onclick="setTool('erase')">Eraser</button>
-</div>
+
+  <div class="main">
+    <div class="container">
+      <canvas id="drawCanvas" width="800" height="600"></canvas>
+    </div>
+
+    <div class="frame-sidebar" id="frameSidebar">
+      <!-- Thumbnails of saved frames will appear here -->
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
