@@ -22,3 +22,35 @@ canvas {
   cursor: crosshair;
   background-color: #fff;
 }
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+  background-color: white;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

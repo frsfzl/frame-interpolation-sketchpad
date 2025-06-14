@@ -35,3 +35,16 @@ function getX(e) {
 function getY(e) {
   return e.clientY - canvas.getBoundingClientRect().top;
 }
+
+let currentTool = 'draw';
+
+function setTool(tool) {
+  currentTool = tool;
+  if (tool === 'draw') {
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+  } else if (tool === 'erase') {
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 10;
+  }
+}
