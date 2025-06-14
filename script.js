@@ -120,51 +120,122 @@ function playFrames() {
     return;
   }
 
-  // Create popup window
-  const popup = window.open('', '', 'width=820,height=640');
+  const popup = window.open('', '', 'width=900,height=750');
   if (!popup) return;
 
-  // Basic HTML structure for popup
   popup.document.write(`
     <html>
-    <head>
-      <title>Frame Playback</title>
-      <style>
-        body {
-          margin: 0;
-          background-color: #f6f1e7;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        }
-        canvas {
-          border: 2px solid #b08861;
-          background: #fff;
-        }
-      </style>
-    </head>
-    <body>
-      <canvas id="playbackCanvas" width="800" height="600"></canvas>
-      <script>
-        const frames = ${JSON.stringify([...thumbnails].map(img => img.src))};
-        const canvas = document.getElementById('playbackCanvas');
-        const ctx = canvas.getContext('2d');
-        let index = 0;
+      <head>
+        <title>Frame Playback</title>
+        <style>
+          body {
+            margin: 0;
+            background-color: #f6f1e7;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+          }
+          canvas {
+            border: 2px solid #b08861;
+            background: #fff;
+          }
+          .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+          }
+          .controls input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+          }
+          .controls button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+          }
+          .controls button img {
+            width: 32px;
+            height: 32px;
+          }
+          .slider {
+            width: 600px;
+          }
+        </style>
+      </head>
+      <body>
+        <canvas id="playbackCanvas" width="800" height="600"></canvas>
+        <div class="controls">
+          <label for="fps">FPS:</label>
+          <input type="number" id="fps" value="5" min="1" max="60" />
+          <button id="togglePlayPauseBtn">
+            <img id="toggleIcon" src="images/play.png" alt="Play">
+          </button>
+          <input type="range" id="frameSlider" class="slider" min="0" max="${thumbnails.length - 1}" value="0">
+        </div>
 
-        function showFrame() {
-          const img = new Image();
-          img.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0);
+        <script>
+          const frames = ${JSON.stringify([...thumbnails].map(img => img.src))};
+          const canvas = document.getElementById('playbackCanvas');
+          const ctx = canvas.getContext('2d');
+          const fpsInput = document.getElementById('fps');
+          const toggleBtn = document.getElementById('togglePlayPauseBtn');
+          const toggleIcon = document.getElementById('toggleIcon');
+          const frameSlider = document.getElementById('frameSlider');
+
+          let currentIndex = 0;
+          let intervalId = null;
+          let isPlaying = false;
+
+          function drawFrame(index) {
+            const img = new Image();
+            img.onload = () => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0);
+            };
+            img.src = frames[index];
+          }
+
+          function startPlayback() {
+            const fps = Math.max(1, parseInt(fpsInput.value) || 5);
+            intervalId = setInterval(() => {
+              drawFrame(currentIndex);
+              frameSlider.value = currentIndex;
+              currentIndex = (currentIndex + 1) % frames.length;
+            }, 1000 / fps);
+            isPlaying = true;
+            toggleIcon.src = "images/pause.png";
+          }
+
+          function pausePlayback() {
+            clearInterval(intervalId);
+            isPlaying = false;
+            toggleIcon.src = "images/play.png";
+          }
+
+          toggleBtn.onclick = () => {
+            if (isPlaying) {
+              pausePlayback();
+            } else {
+              startPlayback();
+            }
           };
-          img.src = frames[index];
-          index = (index + 1) % frames.length;
-        }
 
-        setInterval(showFrame, 300); // Change frame every 300ms
-      <\/script>
-    </body>
+          frameSlider.oninput = (e) => {
+            currentIndex = parseInt(e.target.value);
+            drawFrame(currentIndex);
+            pausePlayback();
+          };
+
+          drawFrame(0); // Show the first frame initially
+        <\/script>
+      </body>
     </html>
   `);
 }
+
+
