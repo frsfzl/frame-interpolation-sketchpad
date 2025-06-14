@@ -8,6 +8,37 @@ body {
   align-items: center;
 }
 
+header {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  padding: 24px 0 10px 0;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2.2em;
+  letter-spacing: 1px;
+}
+
+nav {
+  margin-bottom: 0;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 18px;
+  font-size: 1.1em;
+  transition: text-decoration 0.2s;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
 .main {
   display: flex;
   align-items: flex-start;

@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header>
+    <h1>Frame Interpolation Sketchpad</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+    </nav>
+  </header>
+
   <div class="tools">
     <button onclick="setTool('draw')">Draw</button>
     <button onclick="setTool('erase')">Eraser</button>
@@ -19,7 +27,20 @@
     </div>
 
     <div class="frame-sidebar" id="frameSidebar">
-      <!-- Thumbnails of saved frames will appear here -->
+    </div>
+  </div>
+
+  <!-- save and open project buttons -->
+  <div class="project-controls" style="margin: 32px 0 24px 0; display: flex; gap: 16px;">
+    <button id="saveProjectBtn">Save Project</button>
+    <button id="openProjectBtn">Open Project</button>
+  </div>
+
+  <div id="openProjectModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:24px; border-radius:8px; min-width:300px;">
+      <h3>Open Project</h3>
+      <div id="projectList"></div>
+      <button onclick="closeProjectModal()">Close</button>
     </div>
   </div>
 
