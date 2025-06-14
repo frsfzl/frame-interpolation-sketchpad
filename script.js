@@ -48,12 +48,24 @@ function setTool(tool) {
   }
 }
 
-// Save frame and clear canvas
+// Save frame and clear canvas, then show faded previous frame as onion skin
 function createNewFrame() {
-  const frameImage = new Image();
-  frameImage.src = canvas.toDataURL(); // Save canvas as image
-  frameSidebar.appendChild(frameImage); // Add image to sidebar
+  // Capture current frame as image
+  const prevImage = new Image();
+  prevImage.src = canvas.toDataURL();
 
-  // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  prevImage.onload = () => {
+    // Save the current frame to the sidebar
+    const frameImage = new Image();
+    frameImage.src = prevImage.src;
+    frameImage.style.border = "1px solid #aaa";
+    frameImage.style.cursor = "pointer";
+    frameSidebar.appendChild(frameImage);
+
+    // Clear canvas and draw faded previous frame
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.globalAlpha = 0.3;
+    ctx.drawImage(prevImage, 0, 0);
+    ctx.globalAlpha = 1.0;
+  };
 }
