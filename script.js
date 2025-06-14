@@ -1,13 +1,10 @@
 const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
+const frameSidebar = document.getElementById('frameSidebar');
 
 let drawing = false;
 
-// Set drawing style
-ctx.lineWidth = 2;
-ctx.lineCap = 'round';
-ctx.strokeStyle = '#000';
-
+// Drawing events
 canvas.addEventListener('mousedown', e => {
   drawing = true;
   ctx.beginPath();
@@ -28,6 +25,7 @@ canvas.addEventListener('mouseleave', () => {
   drawing = false;
 });
 
+// Get mouse position
 function getX(e) {
   return e.clientX - canvas.getBoundingClientRect().left;
 }
@@ -36,6 +34,7 @@ function getY(e) {
   return e.clientY - canvas.getBoundingClientRect().top;
 }
 
+// Tool switching
 let currentTool = 'draw';
 
 function setTool(tool) {
@@ -47,4 +46,14 @@ function setTool(tool) {
     ctx.strokeStyle = '#fff';
     ctx.lineWidth = 10;
   }
+}
+
+// Save frame and clear canvas
+function createNewFrame() {
+  const frameImage = new Image();
+  frameImage.src = canvas.toDataURL(); // Save canvas as image
+  frameSidebar.appendChild(frameImage); // Add image to sidebar
+
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
